@@ -331,15 +331,15 @@ Zenefit(21)
 #### 261 Graph Valid Tree 32.5% Medium
 #### 317 Shortest Distance from All Buildings 31.1% Hard
 Amazon(41)
-#### 1 Two Sum 23.0% Easy -
+#### 1 Two Sum 23.0% Easy +
 #### 2 Add Two Numbers 23.0% Medium +-
 #### 3 Longest Substring Without Repeating Characters 21.9% Medium +
-#### 5 Longest Palindromic Substring 23.0% Medium
+#### 5 Longest Palindromic Substring 23.0% Medium +
 #### 8 String to Integer (atoi) 13.5% Easy +
 #### 15 3Sum 18.8% Medium +
 #### 17 Letter Combinations of a Phone Number 28.6% Medium +
-#### 20 Valid Parentheses 29.3% Easy
-#### 21 Merge Two Sorted Lists 35.4% Easy
+#### 20 Valid Parentheses 29.3% Easy +
+#### 21 Merge Two Sorted Lists 35.4% Easy +
 #### 23 Merge k Sorted Lists 23.3% Hard
 #### 42 Trapping Rain Water 32.2% Hard
 #### 48 Rotate Image 34.6% Medium
