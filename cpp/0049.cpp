@@ -15,29 +15,28 @@ Return:
 #include<unordered_map>
 using namespace std;
 
-class Test {
-
+class Solution {
 public:
-     vector<vector<string>> test(vector<string>& strs){
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
         vector<vector<string>> ans;
         unordered_map<string,vector<string>> dict;
         for(auto& s: strs){
-          auto key=s;
-          sort(key.begin(),key.end());
-          dict[key].push_back(s); 
+            auto key=s;
+            sort(key.begin(),key.end());
+            dict[key].push_back(s);
         }
-        
+
         for(auto& el: dict){
             ans.emplace_back(move(el.second));
         }
-        return ans;      
-     }
+        return ans;
+    }
 };
 
 int main(){
   vector<string> s = {"eat", "tea", "tan", "ate", "nat", "bat"};
 
-  auto ans = Test().test(s);
+  auto ans = Solution().groupAnagrams(s);
   
   for(const auto &v:ans){
     for(const auto &st : v){

@@ -6,47 +6,47 @@ using namespace std;
 
 class Solution {
     using VecIt=vector<int>::iterator;
-    
-    int left_amount(VecIt begin, VecIt end){
-      int ans = 0;
-      if(begin==end)
-        return 0;
-     
-      auto max = max_element(begin,end);
-      ans = get_water_count(max,end+1,*max);
-      ans += left_amount(begin,max-1);
-      
-      return ans;
+
+    int left_amount(VecIt begin, VecIt end) {
+        int ans = 0;
+        if (begin == end)
+            return 0;
+
+        auto max = max_element(begin, end);
+        ans = get_water_count(max, end, *max);
+        ans += left_amount(begin, max);
+
+        return ans;
     }
-    
-    int right_amount(VecIt begin, VecIt end){
-      int ans = 0;
-      if(begin==end)
-        return 0;
-      auto max = max_element(begin,end);
-      ans = get_water_count(begin,max,*max);
-      ans += right_amount(max+1,end);
-      
-      return ans;
+
+    int right_amount(VecIt begin, VecIt end) {
+        int ans = 0;
+        if (begin == end)
+            return 0;
+        auto max = max_element(begin, end);
+        ans = get_water_count(begin, max, *max);
+        ans += right_amount(max + 1, end);
+
+        return ans;
     }
-    
-    int get_water_count(VecIt begin, VecIt end,int max_val){
-      int ans=0;
-      while(begin!=end){
-        ans+=(max_val-*begin++);
-      }
-      return ans;        
+
+    int get_water_count(VecIt begin, VecIt end, int max_val) {
+        int ans = 0;
+        while (begin != end) {
+            ans += (max_val - *begin++);
+        }
+        return ans;
     }
-    
+
 public:
-    int trap(vector<int>& height) {
-        int ans=0;
+    int trap(vector<int> &height) {
+        int ans = 0;
         if (height.empty()) {
             return 0;
         }
-        VecIt max = max_element(height.begin(),height.end());
-        ans += left_amount(height.begin(),max-1);
-        ans += right_amount(max+1,height.end());
+        VecIt max = max_element(height.begin(), height.end());
+        ans += left_amount(height.begin(), max);
+        ans += right_amount(max + 1, height.end());
 
         return ans;
     }
@@ -62,9 +62,9 @@ class Solution1 {
       if(begin==end)
         return 0;
      
-      auto max = left_max_arr[end];
-      ans = get_water_count(max,end+1,height[max],height);
-      ans += left_amount(begin,max-1,height);
+      auto max = left_max_arr[end-1];
+      ans = get_water_count(max,end,height[max],height);
+      ans += left_amount(begin,max,height);
       
       return ans;
     }
@@ -119,7 +119,7 @@ public:
         auto max = distance(height.begin(),
                         max_element(height.begin(),height.end()));
         fill_max_arr(height);
-        ans += left_amount(0,max-1, height);
+        ans += left_amount(0,max, height);
         ans += right_amount(max+1,height.size(), height);
 
         return ans;

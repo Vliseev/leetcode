@@ -3,5 +3,5 @@ project(task)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -O0 -fsanitize=undefined -lasan")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -O0 -g -fsanitize=undefined -lasan")
 add_executable(task main.cpp)
