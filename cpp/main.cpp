@@ -1,90 +1,86 @@
-//
-// Created by vlad on 07.05.19.
-//
-#include<vector>
-#include<algorithm>
-#include<iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <iostream>
+#include <sstream>
 
 using namespace std;
 
 class Solution {
-    using VecIt=vector<int>::iterator;
-    vector<int> left_max_arr;
-    vector<int> right_max_arr;
-
-    int left_amount(int begin, int end,const vector<int>& height){
-        int ans = 0;
-        if(begin==end)
-            return 0;
-
-        auto max = left_max_arr[end-1];
-        ans = get_water_count(max,end,height[max],height);
-        ans += left_amount(begin,max,height);
-
-        return ans;
-    }
-
-    int right_amount(int begin, int end,const vector<int>& height){
-        int ans = 0;
-        if(begin==end)
-            return 0;
-        auto max = right_max_arr[begin];
-        ans = get_water_count(begin,max,height[max],height);
-        ans += right_amount(max+1,end,height);
-
-        return ans;
-    }
-
-    int get_water_count(int begin, int end,int max_val,const vector<int>& height){
-        int ans=0;
-        while(begin!=end){
-            ans+=(max_val-height[begin++]);
-        }
-        return ans;
-    }
-
-    void fill_max_arr(const vector<int>& height){
-        int n = height.size();
-        left_max_arr.resize(n);
-        right_max_arr.resize(n);
-
-        int max=0;
-        for(int i=0; i<n; ++i){
-            if(height[i]>height[max])
-                max = i;
-            left_max_arr[i]=max;
-        }
-
-        max = n-1;
-        for(int i=n-1; i>=0; --i){
-            if(height[i]>height[max])
-                max = i;
-            right_max_arr[i]=max;
-        }
-
-    }
-
 public:
-    int trap(vector<int>& height) {
-        int ans=0;
-        if (height.empty()) {
-            return 0;
+    void nextPermutation(vector<int>& nums) {
+
+        if(nums.size()<=1)
+            return;
+
+        int i = nums.size() - 1;
+        while (i >= 1 && nums[i - 1] >= nums[i]) {
+            i--;
         }
 
-        auto max = distance(height.begin(),
-                            max_element(height.begin(),height.end()));
-        fill_max_arr(height);
-        ans += left_amount(0,max, height);
-        ans += right_amount(max+1,height.size(), height);
+        if (i-1 >= 0){
+            int j = nums.size() - 1;
+            while (j >= 0 && nums[i - 1] >= nums[j]) {
+                j--;
+            }
+            swap(nums[i - 1], nums[j]);
+        }
+        reverse(nums.begin() + i, nums.end());
 
-        return ans;
     }
 };
 
-int main() {
-    using namespace std;
-    vector<int> h = {0,1,0,2,1,0,1,3,2,1,2,1};
-    cout << Solution().trap(h);
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
 
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+string integerVectorToString(vector<int> list, int length = -1) {
+    if (length == -1) {
+        length = list.size();
+    }
+
+    if (length == 0) {
+        return "[]";
+    }
+
+    string result;
+    for (int index = 0; index < length; index++) {
+        int number = list[index];
+        result += to_string(number) + ", ";
+    }
+    return "[" + result.substr(0, result.length() - 2) + "]";
+}
+
+int main() {
+    string line = "[3,2,1]";
+    vector<int> nums = stringToIntegerVector(line);
+
+    Solution().nextPermutation(nums);
+
+    string out = integerVectorToString(nums);
+    cout << out << endl;
     return 0;
 }
